@@ -33,6 +33,26 @@ router.get('/',function(req,res) {
     });
 });
 
+router.route('/games').get(function(req,res){
+    Game.find(function(err, games){
+        if(err)
+            res.send(err);
+
+        res.json(games)
+    });
+}).post(function(req, res){
+    var game = new Game();
+    game.name = req.body.name;
+    game.description = req.body.description;
+
+    game.save(function(err){
+        if(err)
+            res.send(err);
+        
+        res.json({message: 'Game Successfully added!'});
+    });
+});
+
 
 app.use('/api', router);
 
