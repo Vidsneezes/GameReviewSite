@@ -3,13 +3,15 @@
 var express = require('express');
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
+var creds = require('./creds.js');
+var Game = require('./models/game');
 
 var app = express();
 var router = express.Router();
 
 var port = process.env.API_PORT || 3001;
 
-mongoose.connect('mongodb://osca:password@ds151973.mlab.com:51973/games');  
+mongoose.connect('mongodb://'+creds.user+':'+creds.pass+'@ds151973.mlab.com:51973/games');  
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -25,14 +27,15 @@ app.use(function(req,res, next) {
     next();
 });
 
-    router.get('/',function(req,res) {
-        res.json({
-            message: 'API Initialized'
-        });
+router.get('/',function(req,res) {
+    res.json({
+        message: 'API Initialized'
     });
+});
 
-    app.use('/api', router);
 
-    app.listen(port, function() {
-        console.log('api is running');
-    });
+app.use('/api', router);
+
+app.listen(port, function() {
+    console.log('api is running');
+});
