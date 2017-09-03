@@ -51,7 +51,7 @@ router.route('/games').get(function(req,res){
         
         res.json({message: 'Game Successfully added!'});
     });
-});
+}); 
 
 
 app.use('/api', router);
